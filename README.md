@@ -45,7 +45,7 @@ Este projeto é uma API de e-commerce desenvolvida em Java utilizando o framewor
 
 ### Autenticação
 
-- **POSTO** `/auth/registro`: Registra um novo usuário.
+- **POST** `/auth/registro`: Registra um novo usuário.
 - **POST** `/auth/login`: Autentica um usuário e retorna um token JWT.
 
 ## Configuração
