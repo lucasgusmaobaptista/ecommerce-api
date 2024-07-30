@@ -5,6 +5,7 @@ import com.lucasgusmao.ecommerce_api.services.ProdutoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/produtos")
@@ -16,19 +17,31 @@ public class ProdutoController {
         this.service = service;
     }
 
-    @GetMapping("/listar")
-    public List<Produto> listProducts() {
-        return service.listarProdutos();
+    @GetMapping
+    public List<Produto> verProdutos() {
+        List<Produto> produtos = service.verProdutos();
+        return produtos;
     }
 
-    @PostMapping(
-            "/criar")
-    public Produto createProduct(@RequestBody Produto produto) {
+    @GetMapping("/{id}")
+    public Optional<Produto> verProdutoPorId(@PathVariable Long id) {
+        return service.verProdutoPorId(id);
+    }
+
+    @PostMapping("/criar")
+    public Produto criarProduto(@RequestBody Produto produto) {
         return service.criarProduto(produto);
     }
 
-    @DeleteMapping("/deletar/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        service.deletarProduto(id);
+    @PutMapping("/atualizar/{id}")
+    public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produto) {
+        Produto p = service.atualizarProduto(id, produto);
+        return p;
+    }
+
+    @DeleteMapping("/remover/{id}")
+    public String removerProduto(@PathVariable Long id) {
+        service.removerProdutoPorId(id);
+        return "Produto removido com sucesso.";
     }
 }

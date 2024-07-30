@@ -30,4 +30,16 @@ public class CarrinhoController {
         return ResponseEntity.ok(carrinhoAtualizado);
     }
 
+    @DeleteMapping("/remove/{idCarrinho}/produto/{idProduto}")
+    public ResponseEntity<Carrinho> removerProdutoDoCarrinho(@PathVariable Long idCarrinho, @PathVariable Long idProduto) {
+        Carrinho carrinhoAtualizado = carrinhoService.removerProdutoDoCarrinho(idCarrinho, idProduto);
+        return ResponseEntity.ok(carrinhoAtualizado);
+    }
+
+    @DeleteMapping("/delete/{idCarrinho}")
+    public ResponseEntity<String> deletarCarrinho(@PathVariable Long idCarrinho) {
+        carrinhoService.deletarCarrinho(idCarrinho);
+        return ResponseEntity.ok("Carrinho deletado com sucesso.");
+    }
+
 }

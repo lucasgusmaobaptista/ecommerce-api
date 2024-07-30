@@ -5,6 +5,7 @@ import com.lucasgusmao.ecommerce_api.repositories.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProdutoService {
@@ -15,15 +16,32 @@ public class ProdutoService {
         this.repository = repository;
     }
 
+    public List<Produto> verProdutos() {
+        return repository.findAll();
+    }
+
+    public Optional<Produto> verProdutoPorId(Long id) {
+        return repository.findById(id);
+    }
+
     public Produto criarProduto(Produto produto) {
         return repository.save(produto);
     }
 
-    public List<Produto> listarProdutos() {
-        return repository.findAll();
+    public Produto atualizarProduto(Long id, Produto produto) {
+        Optional<Produto> produtoExistente = repository.findById(id);
+        if (produtoExistente.isPresent()) {
+            Produto p = produtoExistente.get();
+            p.setName(produto.getName());
+            p.setDescription(produto.getDescription());
+            p.setPrice(produto.getPrice());
+            return repository.save(p);
+        } else {
+            throw new RuntimeException("Produto com o ID " + id + " não encontrado!");
+        }
     }
 
-    public void deletarProduto(Long id) {
+    public void removerProdutoPorId(Long id) {
         repository.deleteById(id);
     }
 }

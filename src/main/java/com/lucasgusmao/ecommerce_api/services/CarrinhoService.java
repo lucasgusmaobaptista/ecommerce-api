@@ -37,5 +37,15 @@ public class CarrinhoService {
         return new ArrayList<>(carrinho.getProdutos());
     }
 
+    public Carrinho removerProdutoDoCarrinho(Long idCarrinho, Long idProduto) {
+        Carrinho carrinho = carrinhoRepository.findById(idCarrinho).orElseThrow(() -> new RuntimeException("Carrinho não encontrado"));
+        Produto produto = produtoRepository.findById(idProduto).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        carrinho.getProdutos().remove(produto);
+        return carrinhoRepository.save(carrinho);
+    }
+
+    public void deletarCarrinho(Long idCarrinho) {
+        carrinhoRepository.deleteById(idCarrinho);
+    }
 }
 
