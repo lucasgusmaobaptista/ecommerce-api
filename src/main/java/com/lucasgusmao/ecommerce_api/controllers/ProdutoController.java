@@ -21,7 +21,8 @@ public class ProdutoController {
         return service.listarProdutos();
     }
 
-    @PostMapping(   "/criar")
+    @PostMapping(
+            "/criar")
     public Produto createProduct(@RequestBody Produto produto) {
         return service.criarProduto(produto);
     }
